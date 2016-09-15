@@ -1,4 +1,5 @@
 <?php
+$job =$_SESSION['job'];
 include("vues/v_sommaire.php");
 $idVisiteur = $_SESSION['idVisiteur'];
 $mois = getMois(date("d/m/Y"));
