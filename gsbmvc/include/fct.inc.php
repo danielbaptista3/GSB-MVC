@@ -218,18 +218,47 @@ function getSum($str) {
     switch ($str) {
         case 'Visiteur':
             return ['<ul id="menuList">',
-                '<li>' . $_SESSION['job'] .'<br>'. $_SESSION['prenom'] . '  ' . $_SESSION['nom'] . '</li>',
+                '<li>' . $_SESSION['job'] . '<br>' . $_SESSION['prenom'] . '  ' . $_SESSION['nom'] . '</li>',
                 '<li class="smenu"> <a href="index.php?uc=gererFrais&action=saisirFrais" title="Saisie fiche de frais ">Saisie fiche de frais</a></li>',
                 '<li class="smenu"><a href="index.php?uc=etatFrais&action=selectionnerMois" title="Consultation de mes fiches de frais">Mes fiches de frais</a></li>',
                 '<li class="smenu"><a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a></li></ul>'];
             break;
         case 'Comptable':
             return ['<ul id="menuList">',
-                '<li>' . $_SESSION['job'] .'<br>'. $_SESSION['prenom'] . '  ' . $_SESSION['nom'] . '</li>',
-                '<li class="smenu"> <a href="index.php?uc=gererFrais&action=validFrais" title="Valider les fiches de frais ">Valider les fiches de frais</a></li>',
-                '<li class="smenu"><a href="index.php?uc=etatFrais&action=suiviFrais" title="Suivi des fiches de frais">Suivi des fiches de frais</a></li>',
+                '<li>' . $_SESSION['job'] . '<br>' . $_SESSION['prenom'] . '  ' . $_SESSION['nom'] . '</li>',
+                '<li class="smenu"> <a href="index.php?uc=validFrais&action=validFrais" title="Valider les fiches de frais ">Valider les fiches de frais</a></li>',
+                '<li class="smenu"><a href="index.php?uc=suiviFrais&action=suiviFrais" title="Suivi des fiches de frais">Suivi des fiches de frais</a></li>',
                 '<li class="smenu"><a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a></li></ul>'];
             break;
     }
 }
+
+function getSixDerMois() {
+    $tabMois = array(
+        "01" => array("mois_num" => "01", "mois_fr" => "Janvier"),
+        "02" => array("mois_num" => "02", "mois_fr" => "Février"),
+        "03" => array("mois_num" => "03", "mois_fr" => "Mars"),
+        "04" => array("mois_num" => "04", "mois_fr" => "Avril"),
+        "05" => array("mois_num" => "05", "mois_fr" => "Mai"),
+        "06" => array("mois_num" => "06", "mois_fr" => "Juin"),
+        "07" => array("mois_num" => "07", "mois_fr" => "Juillet"),
+        "08" => array("mois_num" => "08", "mois_fr" => "Août"),
+        "09" => array("mois_num" => "09", "mois_fr" => "Septembre"),
+        "10" => array("mois_num" => "10", "mois_fr" => "Octobre"),
+        "11" => array("mois_num" => "11", "mois_fr" => "Novembre"),
+        "12" => array("mois_num" => "12", "mois_fr" => "Décembre")
+    );
+    $date = new DateTime(date("Y") . "-" . date("m") . "-01");
+
+    $tabSixDerMois[] = '<option value="' . date("Y") . date("m") . '">' . $tabMois[date("m")]["mois_fr"] . " " . date("Y") . '</option>';
+
+    for ($i = 1; $i <= 5; $i++) {
+        $dateModif = $date->modify('-1  month');
+        $tabSixDerMois[] = '<option value="' . $dateModif->format('Y') . $tabMois[$dateModif->format('m')]["mois_num"] . '">' . $tabMois[$dateModif->format('m')]["mois_fr"] . " " . $dateModif->format('Y') . '</option>';
+    }
+    return $tabSixDerMois;
+}
+
+
+
 ?>
