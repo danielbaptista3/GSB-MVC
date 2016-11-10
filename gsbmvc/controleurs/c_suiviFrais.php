@@ -1,40 +1,41 @@
-﻿<?php
-$job = $_SESSION['job'];
+<?php
+
 include("vues/v_sommaire.php");
 $action = $_REQUEST['action'];
 $idVisiteur = $_SESSION['idVisiteur'];
+$lesFichesValides = $pdo->getFicheFraisValide();
 switch ($action) {
-    case 'selectionnerMois': {
-            $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-            // Afin de sélectionner par défaut le dernier mois dans la zone de liste
-            // on demande toutes les clés, et on prend la première,
-            // les mois étant triés décroissants
-            $lesCles = array_keys($lesMois);
-            $moisASelectionner = $lesCles[0];
-            include("vues/v_listeMois.php");
+    case 'suiviFrais': {
+            include("vues/v_suiviFicheFrais.php");
             break;
         }
-    case 'voirEtatFrais': {
-            $leMois = $_REQUEST['lstMois'];
+    case 'afficheSuivi': {
+            $leMois = substr($_POST['lstVisiteur'], 0, 6);
+            $idVisiteur = substr($_POST['lstVisiteur'], 7, strlen($_POST['lstVisiteur'] - 6));
             $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
             $moisASelectionner = $leMois;
-            include("vues/v_listeMois.php");
+            include("vues/v_suiviFicheFrais.php");
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
             $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
             $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
             $numAnnee = substr($leMois, 0, 4);
             $numMois = substr($leMois, 4, 2);
             $libEtat = $lesInfosFicheFrais['libEtat'];
-            $montantValide = $lesInfosFicheFrais['montantValide'];
-            $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
+            $montantValide = $pdo->montantPourValidation($idVisiteur, $leMois);
+            $nbJustificatifs = count($lesFraisHorsForfait);
             $dateModif = $lesInfosFicheFrais['dateModif'];
             $dateModif = dateAnglaisVersFrancais($dateModif);
-            include("vues/v_etatFrais.php");
+
+            include("vues/v_validationFiche.php");
             break;
         }
-    case 'suiviFrais': {
-            $fiches=$pdo->getFichesFrais();
-            include ("vues/v_suiviFicheFrais.php");
+
+    case 'rembourser': {
+            $leMois = $_POST["mois"];
+            $idVisiteur = $_POST["id"];
+            $pdo->majEtatFicheFrais($idVisiteur, $leMois, "RB");
+            include("vues/v_suiviFicheFrais.php");
+            break;
         }
 }
 ?>

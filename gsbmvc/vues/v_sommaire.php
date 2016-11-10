@@ -24,8 +24,9 @@
                  </ul>
                 
             </div>-->
-</div> 
-        <?php foreach (getSum($_SESSION['job']) as $ligne): ?>
-            <?php echo $ligne; ?>
-        <?php endforeach; ?>
+    </div> 
+    <?php foreach (getSum($_SESSION['job']) as $ligne): ?>
+        <?php echo $ligne; ?>
+        <hr>
+    <?php endforeach; ?>
 </div>

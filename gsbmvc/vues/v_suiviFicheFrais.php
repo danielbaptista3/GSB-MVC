@@ -1,39 +1,48 @@
-﻿ <div id="contenu">
-    <h2>Suivi des fiches de frais</h2>
-    <h3>Fiches des visiteurs et mois à sélectionner :</h3>
-    <form action="index.php?uc=suiviFrais&action=suiviFrais" method="post">
-        <div class="corpsForm">
+<html>
+    <head>
 
-            <p> 
+    </head>
+    <body>
+        <div id="contenu">
+            <h2>Suivi Fiche de Frais</h2>
 
-                <label for="lstMois" accesskey="n">Visiteur : </label>
-                <select id="lstMois" name="lstMois">
-                    <?php
+            <form method="POST"  action="index.php?uc=suiviFrais&action=afficheSuivi">
+                <div class="corpsForm">
 
-                    foreach ($lesMois as $unMois) {
-                        $mois = $unMois['mois'];
-                        $numAnnee = $unMois['numAnnee'];
-                        $numMois = $unMois['numMois'];
-                        if ($mois == $moisASelectionner) {
-                            ?>
-                            <option selected value="<?php echo $mois ?>"><?php echo $numMois . "/" . $numAnnee ?> </option>
-                            <?php
-                        } else {
-                            ?>
-                            <option value="<?php echo $mois ?>"><?php echo $numMois . "/" . $numAnnee ?> </option>
-                            <?php
-                        }
-                    }
-                    ?>    
+                    <fieldset>
+                        <legend>Fiches Validées
+                        </legend>
+                        <div>
+                            <select id="lstVisiteur" name="lstVisiteur">
+                                <?php foreach ($lesFichesValides as $uneFicheValide): ?>
+                                    <?php var_dump($uneFicheValide); ?>
+                                    <?php if ($uneFicheValide["idVisiteur"] == $idVisiteur) : ?>
+                                        <option selected value="<?php echo $uneFicheValide[0] . " " . $uneFicheValide[2] ?>"><?php echo $uneFicheValide[1] ?> </option>
+                                    <?php else : ?>
+                                        <option value="<?php echo $uneFicheValide[0] . " " . $uneFicheValide[2] ?>"><?php echo $uneFicheValide[0] . " - " . $uneFicheValide[1] ?> </option>
+                                    <?php endif; ?>
 
-                </select>
-            </p>
-        </div>
-        <div class="piedForm">
-            <p>
-                <input id="ok" type="submit" value="Valider" size="20" />
 
-            </p> 
-        </div>
 
-    </form>
+
+
+
+
+
+
+
+                                    ?>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <input id="ok" type="submit" value="valider" size="20">
+
+                            ﻿
+
+                        </div>
+
+
+
+                    </fieldset>
+            </form>
+                    </html>

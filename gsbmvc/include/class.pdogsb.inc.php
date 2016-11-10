@@ -319,12 +319,32 @@ class PdoGsb {
         return $ligne;
     }
 
-    public function getFicheFrais() {
-        $req = "select mois, nom from fichefrais f join visiteur v on f.idVisiteur = id where idEtat = 'VA'";
+    public function getFicheFraisValide() {
+        $req = "select  mois, nom, id from fichefrais f join visiteur v on f.idVisiteur = id where idEtat = 'VA'";
         $res = PdoGsb::$monPdo->query($req);
-        $laLigne = $res->fetch();
+        $laLigne = $res->fetchAll();
         return $laLigne;
     }
+
+    function montantPourValidation($id, $date) {
+        $reqUne = "select sum(lignefraisforfait.quantite * fraisforfait.montant) as total from lignefraisforfait"
+                . " join fraisforfait on fraisforfait.id = lignefraisforfait.idFraisForfait"
+                . " where lignefraisforfait.idVisiteur='" . $id . "' and lignefraisforfait.mois=" . $date
+                . " group BY lignefraisforfait.idFraisForfait";
+        $rsUne = PdoGsb::$monPdo->query($reqUne);
+        $rpUne = $rsUne->fetchAll();
+        $reqDeux = "select sum(montant) as total from lignefraishorsforfait"
+                . " where libelle not regexp '^(REFUSE: )' and idVisiteur='" . $id . "' and mois=" . $date;
+        $rsDeux = PdoGsb::$monPdo->query($reqDeux);
+        $rpDeux = $rsDeux->fetch();
+        $total = $rpDeux['total'];
+
+        foreach ($rpUne as $uneSomme) {
+            $total += $uneSomme['total'];
+        }
+        return $total;
+    }
+
 
 }
 ?>
