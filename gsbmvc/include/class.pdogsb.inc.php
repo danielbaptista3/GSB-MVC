@@ -345,6 +345,5 @@ class PdoGsb {
         return $total;
     }
 
-
 }
 ?>

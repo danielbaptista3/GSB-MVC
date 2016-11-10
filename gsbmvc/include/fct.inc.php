@@ -258,7 +258,4 @@ function getSixDerMois() {
     }
     return $tabSixDerMois;
 }
-
-
-
 ?>

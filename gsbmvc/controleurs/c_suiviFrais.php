@@ -27,6 +27,7 @@ switch ($action) {
             $dateModif = dateAnglaisVersFrancais($dateModif);
 
             include("vues/v_validationFiche.php");
+
             break;
         }
 
@@ -35,6 +36,8 @@ switch ($action) {
             $idVisiteur = $_POST["id"];
             $pdo->majEtatFicheFrais($idVisiteur, $leMois, "RB");
             include("vues/v_suiviFicheFrais.php");
+            $message = "Remboursement validée";
+            echo "<script type='text/javascript'>alert('$message');</script>";
             break;
         }
 }

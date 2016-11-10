@@ -57,7 +57,7 @@ body{
     height:27em;
 }
 
-/* pour r�tablir le mauvais effet sur les nav. modernes */
+/* pour r�tablir le mauvais effeet sur les nav. modernes */
 html>body #contenu{
     height:auto;
 }
