@@ -3,7 +3,7 @@
 include("vues/v_sommaire.php");
 $action = $_REQUEST['action'];
 $idVisiteur = $_SESSION['idVisiteur'];
-$lesFichesValides = $pdo->getFicheFraisValide();
+$lesFichesValidees = $pdo->getFicheFraisValide();
 switch ($action) {
     case 'suiviFrais': {
             include("vues/v_suiviFicheFrais.php");
@@ -12,8 +12,6 @@ switch ($action) {
     case 'afficheSuivi': {
             $leMois = substr($_POST['lstVisiteur'], 0, 6);
             $idVisiteur = substr($_POST['lstVisiteur'], 7, strlen($_POST['lstVisiteur'] - 6));
-            $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-            $moisASelectionner = $leMois;
             include("vues/v_suiviFicheFrais.php");
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
             $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);

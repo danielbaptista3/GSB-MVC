@@ -214,8 +214,8 @@ function nbErreurs() {
     }
 }
 
-function getSum($str) {
-    switch ($str) {
+function getSum($job) {
+    switch ($job) {
         case 'Visiteur':
             return ['<ul id="menuList">',
                 '<li>' . $_SESSION['job'] . '<br>' . $_SESSION['prenom'] . '  ' . $_SESSION['nom'] . '</li>',

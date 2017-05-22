@@ -14,11 +14,11 @@
                         </legend>
                         <div>
                             <select id="lstVisiteur" name="lstVisiteur">
-                                <?php foreach ($lesFichesValides as $uneFicheValide): ?>
-                                    <?php if ($uneFicheValide["idVisiteur"] == $idVisiteur) : ?>
-                                        <option selected value="<?php echo $uneFicheValide[0] . " " . $uneFicheValide[2] ?>"><?php echo $uneFicheValide[1] ?> </option>
+                                <?php foreach ($lesFichesValidees as $uneFicheValidee): ?>
+                                    <?php if ($uneFicheValidee["idVisiteur"] == $idVisiteur) : ?>
+                                        <option selected value="<?php echo $uneFicheValidee[0] . " " . $uneFicheValidee[2] ?>"><?php echo $uneFicheValidee[1] ?> </option>
                                     <?php else : ?>
-                                        <option value="<?php echo $uneFicheValide[0] . " " . $uneFicheValide[2] ?>"><?php echo $uneFicheValide[0] . " - " . $uneFicheValide[1] ?> </option>
+                                        <option value="<?php echo $uneFicheValidee[0] . " " . $uneFicheValidee[2] ?>"><?php echo $uneFicheValidee[0] . " - " . $uneFicheValidee[1] ?> </option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
